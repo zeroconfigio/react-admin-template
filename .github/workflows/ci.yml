@@ -1,0 +1,79 @@
+name: "CI"
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+#env:
+#  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
+          cache: "yarn"
+
+      - run: yarn install --immutable
+      - run: yarn check:lint
+      - run: yarn check:prettier
+      # FIXME: tsc hangs when executed with --noEmit flag
+      # - run: yarn check:compile
+
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
+          cache: "yarn"
+
+      - run: yarn install --immutable
+      - run: yarn check:test
+
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0
+
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16
+  #         cache: "yarn"
+
+  #     - run: yarn install --immutable
+
+  #     - name: deploy to dev
+  #       if: contains(github.head_ref , 'main')
+  #       env:
+  #         NODE_ENV: development
+  #       run: yarn deploy
+
+  #     - name: deploy to staging
+  #       if: contains(github.head_ref , 'staging')
+  #       env:
+  #         NODE_ENV: staging
+  #       run: yarn deploy
+
+  #     - name: deploy to production
+  #       if: contains(github.head_ref , 'production')
+  #       env:
+  #         NODE_ENV: production
+  #       run: yarn deploy

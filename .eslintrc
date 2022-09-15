@@ -1,0 +1,47 @@
+{
+  "env": {
+    "browser": true
+  },
+  "plugins": ["jsx-a11y"],
+  "extends": ["react-app", "react-app/jest", "plugin:jsx-a11y/recommended", "plugin:compat/recommended", "prettier"],
+  "rules": {
+    "react/self-closing-comp": ["error"],
+    "import/first": "error",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_",
+        "ignoreRestSiblings": true
+      }
+    ],
+    "@typescript-eslint/no-redeclare": "error",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "testing-library/no-render-in-setup": "off"
+  },
+  "settings": {
+    "polyfills": ["fetch"]
+  },
+  "overrides": [
+    {
+      "files": ["**/*.stories.*", "**/*.test.*"],
+      "rules": {
+        "import/no-anonymous-default-export": "off",
+        "@typescript-eslint/no-explicit-any": "off"
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": ["@mui/*/*/*", "!@mui/material/test-utils/*"]
+          }
+        ]
+      }
+    }
+  ]
+}

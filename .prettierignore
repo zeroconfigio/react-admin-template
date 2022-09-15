@@ -1,0 +1,8 @@
+# Ignore artifacts:
+build
+coverage
+*.html
+
+# Add files here to ignore them from prettier formatting
+/dist
+/coverage

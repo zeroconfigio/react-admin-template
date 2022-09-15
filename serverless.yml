@@ -1,0 +1,16 @@
+component: website
+name: cms-webapp
+org: pragmateam
+
+stage: dev
+
+inputs:
+  src: ./src
+  dist: ./dist
+  hook: yarn build # the hook you want to run
+  # Enable this when you want to set a custom domain.
+  # domain: ${env:domain}
+  region: ap-southeast-2
+  bucketName: cms-webapp # (optional) aws bucket name. default is an auto generated name.
+  # indexDocument: index.html # (optional) index document for your website. default is index.html.
+  # errorDocument: index.html
